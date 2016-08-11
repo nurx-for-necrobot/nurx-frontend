@@ -1,0 +1,303 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>Nurx Necrobot Frontend</title>
+
+        <meta charset="UTF-8">
+
+        <link href="css/materialize.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/opensans.css" rel="stylesheet" type="text/css" />
+        <link href="css/nurx.min.css" rel="stylesheet" type="text/css" />        
+    </head>
+    <body>
+        
+        <!-- TAB CREATION MODAL -->
+        <div id="instance-create-modal" class="modal">
+            <div class="modal-content">
+                <div class="input-field">                    
+                    <input data-bind="matInput: newInstUrl, value: newInstUrl" type="text" id='instance-url' />
+                    <label for='instance-url'>Server URL</label>
+                </div>
+
+                <div class="input-field">                    
+                    <input data-bind="matInput: newInstUser, value: newInstUser" type="text" id='instance-user' />
+                    <label for='instance-user'>Username</label>
+                </div>
+
+                <div class="input-field">                	
+                    <input data-bind="value: newInstPass" type="password" id='instance-pass' />
+                    <label for='instance-pass'>Password</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#"
+                    data-bind="click: function() { createNewInstanceTab(); }" 
+                    class="waves-effect waves-light btn">Create New Tab</a>
+
+                <a href="#!"
+                    data-bind="click: function() { closeNewInstanceModal(); }" 
+                    class="modal-action waves-effect waves-light btn blue-grey darken-1"
+                    style='margin-right: 5px;'>Close</a>
+            </div>
+        </div>
+
+        <!-- SSL Check -->
+        <div id="ssl-check-modal"class="modal">
+            <div class="modal-content center">
+                <p>It appears Nurx was able to connect to NecroBot via an enencrypted connection, but not the encrypted connection. This may mean that you have not set your browser to accept the self signed certificate that NecroBot uses.</p>
+
+                <p>Please click the link below and allow the certificate, then come back to Nurx and click OK.</p>
+
+                <p><a data-bind="attr: { href: SSLCheckUrl() }, text: SSLCheckUrl()" target="_blank"></a></p>
+
+                <p><a 
+                    data-bind="click: function() { triggerReconnectAll(); }"
+                    class="modal-action modal-close waves-effect waves-light btn blue-grey darken-1" 
+                    href="#!">OK</a></p>
+            </div>
+        </div>
+
+        <!-- TAB CLOSE MODAL -->
+        <div id="instance-close-modal" class="modal">
+            <div class="modal-content center">
+                Are you sure you want to close this tab?
+            </div>
+            <div class="modal-footer">
+                <a href="#"
+                    data-bind="click: function() { closeInstance(); }" 
+                    class="waves-effect waves-light btn red">Yes</a>
+
+                <a href="#!"
+                    data-bind="click: function() { closeNewInstanceModal(); }" 
+                    class="modal-action waves-effect waves-light btn blue-grey darken-1"
+                    style='margin-right: 5px;'>Cancel</a>
+            </div>
+        </div>
+
+        <!-- Global Start -->
+        <div id="global">
+            <div class="instance-list">
+                <header>
+                    <h1>Nurx</h1>
+                </header>
+
+                <div data-bind="foreach: instances">
+                    <div class="instance-tab" data-bind="
+                        css: { 'instance-tab-selected':  ($root.selectedInstanceIdx() == $index()) },
+                        click: function() { $root.selectedInstanceIdx($index()); }"> 
+                        <span data-bind="text: (profileData() != null ? profileData().Username : '...')"></span>
+                        <a href="#" data-bind="click: function() { $root.showCloseInstanceModal(instanceId); }" class="tab-close-button">X</a>
+                    </div>
+                </div>
+
+                 <a 
+                    class="instance-tab new-instance-tab" 
+                    href="#"
+                    data-bind="click: function() { showNewInstanceDialog(); }">+</a>
+            </div>            
+
+            <div data-bind="if: currentInstance() != null">
+                <!-- Left sidebar -->
+                <div class="sidebar sidebar-left" data-bind="with: currentInstance">
+                    <div data-bind="if: !isConnected()">
+                        <div class="center pad-v-30">
+                            <div class="preloader-wrapper small active">
+                                <div class="spinner-layer spinner-blue">
+                                    <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                    </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                    </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                    </div>
+                                </div>
+
+                                <div class="spinner-layer spinner-red">
+                                    <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                    </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                    </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                    </div>
+                                </div>
+
+                                <div class="spinner-layer spinner-yellow">
+                                    <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                    </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                    </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                    </div>
+                                </div>
+
+                                <div class="spinner-layer spinner-green">
+                                    <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                    </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                    </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pad-v-15">
+                                <span class="text-upper small" data-bind="html: connectionText"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-bind="if: isConnected()">
+                        <!-- Panel Navigation -->
+                        <div class="center panel-nav" style="height: 100%">
+                            <div style="margin-top: 35px">
+                                <a class="btn-floating btn-large waves-effect waves-light teal"
+                                    data-bind="click: function() { $root.openPanel('pokemon'); }">
+                                    <i><div style='background-image: url(img/pokeball.png); width: 100%; height: 100%; background-repeat: no-repeat; background-size: 36px 36px; background-position: center center;'></div></i>
+                                </a>
+
+                                <br /><br />
+
+                                <a class="btn-floating btn-large waves-effect waves-light red"
+                                    data-bind="click: function() { $root.openPanel('inventory'); }">
+                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                                </a>
+
+                                <br /><br />
+
+                                <a class="btn-floating btn-large waves-effect waves-light green"
+                                    data-bind="click: function() { showLog(!showLog()); }">
+                                    <i class="fa fa-terminal" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="sidebar sidebar-right" data-bind="with: currentInstance">
+                </div>
+
+                <!-- Player card -->
+                <div class="sidebar sidebar-right" data-bind="with: currentInstance">
+                    <div data-bind="if: isConnected() && profileData() != null">
+                        <div class="card player-card">
+                            <div class="card-content">
+                                <div class="profile" data-bind="if: profileData() != null">
+                                    <h2 data-bind="text: profileData().Username"></h2>
+                                    <span class="small" data-bind="text: statsData() != null ? ('Level: ' + statsData().Level + ' (' + statsData().CurrentXp + '/' + statsData().LevelupXp + ')') : ''"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+
+                <div class="custom-modal-overlay"></div>
+
+                <div class="panel" data-bind="with: currentInstance">
+                    <div class="panel-close-btn">
+                        <a class="btn-floating btn-medium waves-effect waves-light red"
+                            data-bind="click: function() { $root.closePanel(); }">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <!-- Inventory -->
+                    <div data-bind="if: (selectedPane() == 'inventory')">
+                        <div class="panel-inner">
+                            <h1>Inventory</h1>
+
+                            <div class="row">
+                                <div data-bind="foreach: inventory.items">
+                                    <div class="col s6">
+                                        <div class="item-row">
+                                            <div class="item-image" data-bind="attr: { style: 'background-image: url(img/inventory/' + Base.ItemId + '.png)' }"></div>
+                                            <div class="item-data">
+                                                <div><span class="item-name" data-bind="text: $root.pokedata.inventory[Base.ItemId]"></span></div>
+                                                <div><span class="item-count" data-bind="text: 'Count: ' + Base.Count + '.'"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pokemon Panel -->
+                    <div data-bind="if: (selectedPane() == 'pokemon')">
+                        <div class="panel-inner">
+                            <h1>Pokemon</h1>
+
+                            <div style="height: 50px; position: relative; height: 0px; top: -35px;">
+                                <div class="fixed-action-btn horizontal text-right" style="position: relative;">
+                                    <a class="btn-floating btn-large red" style="position: absolute; right: 10px;">
+                                        <i class="large material-icons">sort_by_alpha</i>
+                                    </a>
+                                    <ul>
+                                        <li><a data-bind="click: function() { pokemon.sortBy('Perfection'); }" class="btn-floating red"><i style='font-style: normal;'>IV</i></a></li>
+                                        <li><a data-bind="click: function() { pokemon.sortBy('Cp'); }" class="btn-floating yellow darken-1"><i style='font-style: normal;'>CP</i></a></li>
+                                        <li><a data-bind="click: function() { pokemon.sortBy('Hp'); }" class="btn-floating green"><i class="fa fa-heart-o" aria-hidden="true"></i></a></li>
+                                        <li><a data-bind="click: function() { pokemon.sortBy('PokemonId'); }" class="btn-floating blue"><i class="fa fa-hashtag" aria-hidden="true"></i></a></li>
+                                        <li><a data-bind="click: function() { pokemon.sortBy('CreationTimeMs'); }" class="btn-floating deep-purple"><i class="material-icons">query_builder</i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="pad-h-15 pad-v-10">
+                                <span style='font-family: "Roboto"; font-weight: 200; text-transform: uppercase;' data-bind="text: 'Sorted By: ' + pokemon.sortFieldDescription() + ' (' + (pokemon.sortAscending() ? 'Ascending' : 'Descending') + ')'"></span>
+                            </div>
+
+                            <div class="row">
+                                <div data-bind="foreach: pokemon.pokemonListSorted">
+                                    <div class="col s6">
+                                        <div class="pokemon-row">
+                                            <div class="poke-image" data-bind="attr: { style: 'background-image: url(img/pokemon/' + Base.PokemonId + '.png)' }"></div>
+                                            <div class="poke-data">
+                                                <div><span class="poke-name" data-bind="text: $root.pokedata.pokemon[Base.PokemonId]"></span></div>
+                                                <div><span class="poke-cpiv" data-bind="text: '( CP: ' + Base.Cp + ' IV: ' + Perfection.toPrecision(4) + '% )'"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+
+
+            <!-- Navigation/Map/Log -->
+            <div data-bind="foreach: instances">
+                <div class="instance" data-bind="
+                    css: { 'instance-hide': ($root.selectedInstanceIdx() != $index()) },
+                    attr: { 'id': instanceId }">                                    
+
+                    <div class="pane-container">
+                        <div class="map pane">
+                            <div style='overflow:hidden;height:100%;width:100%;'>
+                                <div data-bind="attr: { id: 'gmap-' + instanceId }" style='height:100%;width:100%;'></div>            
+                            </div>
+                        </div>                        
+                    </div>
+
+                    <div class="log" data-bind="css: { 'log-hidden': !showLog() }">
+                        <div class="log-header">Log</div>
+                        <div class="log-content"></div>
+                    </div>        
+                </div>
+            </div>
+        </div>        
+
+        <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/knockout-min.js"></script>
+        <script type="text/javascript" src="js/numeral.min.js"></script>
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
+        <!--<script type="text/javascript" src="../tmp/nurx-concat.js"></script>-->
+        <script type="text/javascript" src="js/nurx.min.js"></script>
+    </body>
+</html>

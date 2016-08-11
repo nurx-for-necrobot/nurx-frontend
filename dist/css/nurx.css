@@ -1,0 +1,383 @@
+html,
+body {
+  font-family: "Open Sans";
+  background-color: #222;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  overflow: hidden;
+}
+h1 {
+  margin: 15px 0 5px 0;
+  font-weight: 200;
+  font-size: 35px;
+  margin: 0;
+  padding: 0;
+}
+h2 {
+  font-weight: 200;
+  font-size: 20px;
+}
+header h1 {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-family: "Roboto";
+  font-weight: 200;
+}
+.text-upper {
+  text-transform: uppercase;
+}
+.small {
+  font-size: 0.8em;
+}
+.pad-h-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.pad-h-15 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.pad-h-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.pad-h-30 {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.pad-v-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.pad-v-15 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.pad-v-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.pad-v-30 {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+/*
+ * MODAL
+ */
+.modal {
+  background-color: #333 !important;
+}
+.modal-footer {
+  background-color: #303030 !important;
+}
+#global {
+  background-color: #333;
+  box-shadow: 0 0 10px #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 200ms ease-in;
+}
+#global.modal-active {
+  transform: scale(0.95);
+  filter: blur(200px);
+}
+/*
+ * TABS
+ */
+header {
+  float: left;
+  width: 150px;
+}
+.instance-list {
+  position: fixed;
+  top: 0;
+  height: 40px;
+  width: 100%;
+  border-bottom: 2px solid #007acc;
+  background-color: #222;
+  z-index: 10000;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+}
+.instance-tab {
+  height: 30px;
+  margin-top: 10px;
+  float: left;
+  padding: 5px 15px 0 15px;
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  transition: all 0.1s linear;
+  border: 1px solid #393939;
+  border-bottom: 0;
+  z-index: 300;
+}
+.instance-tab:hover {
+  background-color: #393939;
+}
+.instance-tab-selected,
+.instance-tab-selected:hover {
+  background-color: #007acc;
+  border: 1px solid #007acc;
+  border-bottom: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  z-index: 301;
+}
+.new-instance-tab {
+  margin-left: 10px;
+}
+.instance-hide {
+  position: fixed;
+  height: 1px;
+  width: 1px;
+  top: -10000px;
+}
+.tab-close-button {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  padding: 2px;
+  padding-left: 5px;
+  position: relative;
+  top: -5px;
+  left: 10px;
+  width: 18px;
+  background-color: rgba(255, 255, 255, 0);
+  transition: all 150ms linear;
+}
+.tab-close-button:hover {
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+/*
+ * SIDEBAR NAVIGATION
+ */
+.sidebar {
+  position: absolute;
+  top: 0;
+  z-index: 500;
+  width: 200px;
+  height: 100%;
+  background-color: rgba(26, 57, 71, 0.75);
+  color: #fff;
+  font-family: "Roboto";
+  padding-top: 40px;
+}
+.sidebar-left {
+  left: 0;
+}
+.sidebar-right {
+  right: 0;
+}
+header {
+  padding: 10px 0 20px 20px;
+}
+.player-card {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  width: 300px;
+  z-index: 500;
+}
+.profile {
+  color: #000;
+}
+.profile h2 {
+  margin: 0 0 5px 0;
+}
+/**
+ * CONTENT PANELS
+ */
+.custom-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 500;
+  display: none;
+}
+.panel {
+  background-color: #fff;
+  position: absolute;
+  width: 70%;
+  left: 15%;
+  height: 85%;
+  top: 10%;
+  border-radius: 3px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  transform: scale(0);
+  opacity: 0;
+  transition: all 0.2s ease-in;
+  color: #000;
+}
+.panel-shown {
+  transform: scale(1);
+  opacity: 1;
+}
+.panel-inner {
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
+}
+.panel-close-btn {
+  position: relative;
+  top: -18px;
+  right: 0px;
+  overflow: visible;
+  height: 0px;
+  text-align: right;
+}
+.panel-close-btn a {
+  position: relative;
+  left: 18px;
+}
+.panel h1 {
+  margin-bottom: 30px;
+}
+/**
+ * NAVIGATION/MAP
+ */
+.pane-container {
+  float: left;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  margin-top: 40px;
+}
+.pane-hidden {
+  position: absolute;
+  left: -10000px;
+}
+/*
+ * LOGGING
+ */
+.log {
+  height: 200px;
+  border: 2px solid #007acc;
+  border-left: 0;
+  float: left;
+  background-color: #222;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  display: none;
+  z-index: 500;
+}
+.log-hidden {
+  left: -1000px;
+  right: auto;
+  width: 1px;
+}
+.log-show {
+  display: block;
+}
+.log-header {
+  background-color: #007acc;
+  padding: 2px 0 2px 15px;
+  font-size: 10px;
+  height: 20px;
+  font-weight: bold;
+}
+.log-content {
+  background-color: transparent;
+  height: 100%;
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+  color: #fff;
+  margin-bottom: -20px;
+  border: 0;
+}
+.log-entry {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  color: #fff;
+}
+.log-color-Caught {
+  color: #00db00;
+}
+.log-color-Evolve {
+  color: #ffff00;
+}
+.log-color-Update {
+  color: #fff;
+}
+/*
+ * PANE: Inventory
+ */
+.item-row {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 15px;
+  /*background-color: #2a2a2a;
+    border: 1px solid #333;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);*/
+  color: #000;
+}
+.item-image {
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 75px;
+  width: 75px;
+  float: left;
+}
+.item-data {
+  float: left;
+  padding: 0 0 0 25px;
+}
+.item-name {
+  font-size: 25px;
+  font-weight: 200;
+}
+.item-count {
+  font-size: 12px;
+  color: #999;
+}
+/*
+ * PANE: POKEMON
+ */
+.pokemon-row {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 15px;
+  /*background-color: #2a2a2a;
+    border: 1px solid #333;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);*/
+  color: #000;
+}
+.poke-image {
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 75px;
+  width: 75px;
+  float: left;
+}
+.poke-data {
+  float: left;
+  padding: 0 0 0 25px;
+}
+.poke-name {
+  font-size: 25px;
+  font-weight: 200;
+}
+.poke-cpiv {
+  font-size: 12px;
+  color: #999;
+}
