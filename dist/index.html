@@ -199,6 +199,19 @@
 
                 <div class="custom-modal-overlay"></div>
 
+            
+                <div class="map-overlay" data-bind="with: currentInstance">
+                    <!-- Switch -->
+                    <div class="switch">
+                        <label>
+                        <span style='color: #333;' data-bind="text: tr('Pin to player: ')"></span>
+                        <input type="checkbox" data-bind="checked: navigation.pinToPlayer">
+                        <span class="lever"></span>
+                        </label>
+                    </div>
+                </div>                                  
+
+
                 <div class="panel" data-bind="with: currentInstance">
                     <div class="panel-close-btn">
                         <a class="btn-floating btn-medium waves-effect waves-light red"
@@ -275,7 +288,7 @@
             <div data-bind="foreach: instances">
                 <div class="instance" data-bind="
                     css: { 'instance-hide': ($root.selectedInstanceIdx() != $index()) },
-                    attr: { 'id': instanceId }">                                    
+                    attr: { 'id': instanceId }">  
 
                     <div class="pane-container">
                         <div class="map pane">

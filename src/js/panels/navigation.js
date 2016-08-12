@@ -15,6 +15,8 @@ window.nurx.registerPanel("navigation", function(nurx) {
     var locationHistory = [];
     var locationLine;
 
+    var pinToPlayer = ko.observable(true);
+
     function init() {
         // Initialize the map.
         var mapOptions = {
@@ -43,9 +45,11 @@ window.nurx.registerPanel("navigation", function(nurx) {
     function updateLocation(message) {
 
         // Set the center and player marker.
-        var pos = new google.maps.LatLng(message.Data.Lat, message.Data.Lng);
-        map.setCenter(pos);
+        var pos = new google.maps.LatLng(message.Data.Lat, message.Data.Lng);        
         playerMarker.setPosition(pos);
+
+        if(pinToPlayer())
+            map.setCenter(pos);
 
         // Setup the location history line.
         locationHistory.push({ lat: message.Data.Lat, lng: message.Data.Lng });
@@ -187,6 +191,7 @@ window.nurx.registerPanel("navigation", function(nurx) {
     
 
     return {   
-        init: init
+        init: init,
+        pinToPlayer: pinToPlayer
     };
 });
