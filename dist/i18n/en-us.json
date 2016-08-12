@@ -1,0 +1,5 @@
+{
+    "ssl-warning-1": "It appears Nurx was able to connect to NecroBot via an enencrypted connection, but not the encrypted connection. This may mean that you have not set your browser to accept the self signed certificate that NecroBot uses.",
+    "ssl-warning-2": "Please click the link below and allow the certificate, then come back to Nurx and click OK.",
+    "pokemon": "Pokémon"
+}

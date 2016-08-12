@@ -2,6 +2,7 @@
 window.nurx = (function() {
 
     var pokedata = window.pokedata;
+    var DEFAULT_SERVICE_PORT = 14251;
 
     var defaultModalOptions = {
         ready: function() { $('#global').addClass('modal-active'); },

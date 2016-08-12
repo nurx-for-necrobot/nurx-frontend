@@ -9,7 +9,8 @@
     "gulp-uglify": "latest",
     "gulp-sourcemaps": "1.6.0",
     "gulp-less": "latest",
-    "gulp-clean-css": "latest"
+    "gulp-clean-css": "latest",
+    "http-server": "latest"
   },
   "scripts": {
       "build": "gulp"

@@ -18,26 +18,26 @@
             <div class="modal-content">
                 <div class="input-field">                    
                     <input data-bind="matInput: newInstUrl, value: newInstUrl" type="text" id='instance-url' />
-                    <label for='instance-url'>Server URL</label>
+                    <label for='instance-url' data-bind="text: tr('Server URL')"></label>
                 </div>
 
                 <div class="input-field">                    
                     <input data-bind="matInput: newInstUser, value: newInstUser" type="text" id='instance-user' />
-                    <label for='instance-user'>Username</label>
+                    <label for='instance-user' data-bind="text: tr('Username')"></label>
                 </div>
 
                 <div class="input-field">                	
                     <input data-bind="value: newInstPass" type="password" id='instance-pass' />
-                    <label for='instance-pass'>Password</label>
+                    <label for='instance-pass' data-bind="text: tr('Password')"></label>
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="#"
-                    data-bind="click: function() { createNewInstanceTab(); }" 
-                    class="waves-effect waves-light btn">Create New Tab</a>
+                    data-bind="click: function() { createNewInstanceTab(); }, text: tr('Create New Tab')" 
+                    class="waves-effect waves-light btn"></a>
 
                 <a href="#!"
-                    data-bind="click: function() { closeNewInstanceModal(); }" 
+                    data-bind="click: function() { closeNewInstanceModal(); }, text: tr('Close')" 
                     class="modal-action waves-effect waves-light btn blue-grey darken-1"
                     style='margin-right: 5px;'>Close</a>
             </div>
@@ -46,14 +46,14 @@
         <!-- SSL Check -->
         <div id="ssl-check-modal"class="modal">
             <div class="modal-content center">
-                <p>It appears Nurx was able to connect to NecroBot via an enencrypted connection, but not the encrypted connection. This may mean that you have not set your browser to accept the self signed certificate that NecroBot uses.</p>
+                <p data-bind="text: tr('ssl-warning-1')"></p>
 
-                <p>Please click the link below and allow the certificate, then come back to Nurx and click OK.</p>
+                <p data-bind="text: tr('ssl-warning-2')"></p>
 
                 <p><a data-bind="attr: { href: SSLCheckUrl() }, text: SSLCheckUrl()" target="_blank"></a></p>
 
                 <p><a 
-                    data-bind="click: function() { triggerReconnectAll(); }"
+                    data-bind="click: function() { triggerReconnectAll(); }, text: tr('OK')"
                     class="modal-action modal-close waves-effect waves-light btn blue-grey darken-1" 
                     href="#!">OK</a></p>
             </div>
@@ -61,18 +61,16 @@
 
         <!-- TAB CLOSE MODAL -->
         <div id="instance-close-modal" class="modal">
-            <div class="modal-content center">
-                Are you sure you want to close this tab?
-            </div>
+            <div class="modal-content center" data-bind="text: tr('Are you sure you want to close this tab?')"></div>
             <div class="modal-footer">
                 <a href="#"
-                    data-bind="click: function() { closeInstance(); }" 
-                    class="waves-effect waves-light btn red">Yes</a>
+                    data-bind="click: function() { closeInstance(); }, text: tr('Yes')" 
+                    class="waves-effect waves-light btn red"></a>
 
                 <a href="#!"
-                    data-bind="click: function() { closeNewInstanceModal(); }" 
+                    data-bind="click: function() { closeNewInstanceModal(); }, text: tr('Cancel')" 
                     class="modal-action waves-effect waves-light btn blue-grey darken-1"
-                    style='margin-right: 5px;'>Cancel</a>
+                    style='margin-right: 5px;'></a>
             </div>
         </div>
 
@@ -209,7 +207,7 @@
                     <!-- Inventory -->
                     <div data-bind="if: (selectedPane() == 'inventory')">
                         <div class="panel-inner">
-                            <h1>Inventory</h1>
+                            <h1 data-bind="text: tr('Inventory')"></h1>
 
                             <div class="row">
                                 <div data-bind="foreach: inventory.items">
@@ -230,7 +228,7 @@
                     <!-- Pokemon Panel -->
                     <div data-bind="if: (selectedPane() == 'pokemon')">
                         <div class="panel-inner">
-                            <h1>Pokemon</h1>
+                            <h1 data-bind="text: tr('Pokemon')"></h1>
 
                             <div style="height: 50px; position: relative; height: 0px; top: -35px;">
                                 <div class="fixed-action-btn horizontal text-right" style="position: relative;">
@@ -285,7 +283,7 @@
                     </div>
 
                     <div class="log" data-bind="css: { 'log-hidden': !showLog() }">
-                        <div class="log-header">Log</div>
+                        <div class="log-header" data-bind="text: tr('Log')"></div>
                         <div class="log-content"></div>
                     </div>        
                 </div>
