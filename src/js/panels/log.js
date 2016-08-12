@@ -33,7 +33,7 @@ window.nurx.registerPanel("log", function(nurx) {
             return;
             
         // Add new log entry, truncate old entries.
-        $("#" + nurx.instanceId + " .log-content").append("<div class='log-entry log-color-" + logLevels[message.Data.Level] + "'>[" + logLevels[message.Data.Level] + "] " + message.Data.Message + '</div>');
+        $("#" + nurx.instanceId + " .log-content").append("<div class='log-entry log-color-" + tr(logLevels[message.Data.Level])() + "'>[" + logLevels[message.Data.Level] + "] " + message.Data.Message + '</div>');
         $("#" + nurx.instanceId + " .log-content").css({ height: ($("#" + nurx.instanceId + " .log").height() - 20) + "px" });
 
         while($("#" + nurx.instanceId + " .log-entry").length > 100) {

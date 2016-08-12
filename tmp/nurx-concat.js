@@ -6,13 +6,18 @@ window.i18n = (function() {
      * Get a thranslated phrase.
      */
     function getTranslatedPhrase(phrase) {
-        var phraseId = phrase.toLowerCase();
+        try {
+            var phraseId = phrase.toLowerCase();
 
-        if(phraseId in loadedPhrases)
-            return loadedPhrases[phraseId];
+            if(phraseId in loadedPhrases)
+                return loadedPhrases[phraseId];
 
-        loadedPhrases[phraseId] = ko.observable(phrase);    
-        return loadedPhrases[phraseId]
+            loadedPhrases[phraseId] = ko.observable(phrase);    
+            return loadedPhrases[phraseId]
+        } catch(err) {
+            console.log("Error getting translation for phrase:", phrase);
+            console.log(err);
+        }
     }
 
 
@@ -47,15 +52,30 @@ window.i18n = (function() {
     // Return module.
     var vm = {
         getTranslatedPhrase: getTranslatedPhrase,
-        setLanguage: setLanguage
+        setLanguage: setLanguage,
+        loadedPhrases: loadedPhrases
     }
     return vm;
 })();
 
 // Global translation function.
 function tr(phrase) {
+    if(phrase == null) {
+        console.log("Error: can't translate a null phrase.");
+        return '';
+    }
+    
     return window.i18n.getTranslatedPhrase(phrase);
-} 
+}
+
+function ftr(phrase, args) {
+    if(phrase == null) {
+        console.log("Error: can't translate a null phrase.");
+        return '';
+    }
+
+    return vsprintf(tr(phrase)(), args);
+}
 function EncounterMarker(latlng, map, args) {
 	this.latlng = latlng;	
 	this.args = args;	
@@ -325,16 +345,16 @@ window.nurx = (function() {
 
             if (wsConnectTries == 0) {
                 timeout = 1000;
-                connectionText("Connection lost<br />reconnecting ...");
+                connectionText(tr("Connection lost<br />reconnecting ...")());
             } else if (wsConnectTries < 3) {
                 timeout = 20000;            // 20 seconds until 3rd try;
-                connectionText("Connection lost<br />trying again in 20 seconds ...");
+                connectionText(tr("Connection lost<br />trying again in 20 seconds ...")());
             } else if (wsConnectTries < 10) {
                 timeout = 1000 * 60 * 5;    // 5 minutes until 10th try.
-                connectionText("Connection lost<br />trying again in 5 minutes  ...");
+                connectionText(tr("Connection lost<br />trying again in 5 minutes  ...")());
             } else {
                 timeout = 1000 * 60 * 20;   // 20 minutes.
-                connectionText("Connection lost<br />trying again in 20 minutes ...");
+                connectionText(tr("Connection lost<br />trying again in 20 minutes ...")());
             }
             
             wsConnectTries++;
@@ -387,7 +407,7 @@ window.nurx = (function() {
                 case "profile":
                     profileData(message.Data);
                     break;
-                case "stats":
+                case "stats":                
                     statsData(message.Data);
                     break;
                 default:
@@ -653,7 +673,7 @@ window.nurx.registerPanel("log", function(nurx) {
             return;
             
         // Add new log entry, truncate old entries.
-        $("#" + nurx.instanceId + " .log-content").append("<div class='log-entry log-color-" + logLevels[message.Data.Level] + "'>[" + logLevels[message.Data.Level] + "] " + message.Data.Message + '</div>');
+        $("#" + nurx.instanceId + " .log-content").append("<div class='log-entry log-color-" + tr(logLevels[message.Data.Level])() + "'>[" + logLevels[message.Data.Level] + "] " + message.Data.Message + '</div>');
         $("#" + nurx.instanceId + " .log-content").css({ height: ($("#" + nurx.instanceId + " .log").height() - 20) + "px" });
 
         while($("#" + nurx.instanceId + " .log-entry").length > 100) {
@@ -922,11 +942,11 @@ window.nurx.registerPanel("pokemon", function(nurx) {
      */
     var sortFieldDescription = ko.computed(function() {
         switch(pokemonSortField()) {
-            case "Perfection": return "IV";      
-            case "Cp": return "CP";
-            case "Hp": return "HP"; 
-            case "PokemonId": return "Number";     
-            case "CreationTimeMs": return "Recent";
+            case "Perfection": return tr("IV")();      
+            case "Cp": return tr("CP")();
+            case "Hp": return tr("HP")(); 
+            case "PokemonId": return tr("Number")();     
+            case "CreationTimeMs": return tr("Recent")();
         }
 
         return pokemonSortField();

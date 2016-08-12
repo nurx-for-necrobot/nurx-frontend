@@ -6,13 +6,18 @@ window.i18n = (function() {
      * Get a thranslated phrase.
      */
     function getTranslatedPhrase(phrase) {
-        var phraseId = phrase.toLowerCase();
+        try {
+            var phraseId = phrase.toLowerCase();
 
-        if(phraseId in loadedPhrases)
-            return loadedPhrases[phraseId];
+            if(phraseId in loadedPhrases)
+                return loadedPhrases[phraseId];
 
-        loadedPhrases[phraseId] = ko.observable(phrase);    
-        return loadedPhrases[phraseId]
+            loadedPhrases[phraseId] = ko.observable(phrase);    
+            return loadedPhrases[phraseId]
+        } catch(err) {
+            console.log("Error getting translation for phrase:", phrase);
+            console.log(err);
+        }
     }
 
 
@@ -47,12 +52,27 @@ window.i18n = (function() {
     // Return module.
     var vm = {
         getTranslatedPhrase: getTranslatedPhrase,
-        setLanguage: setLanguage
+        setLanguage: setLanguage,
+        loadedPhrases: loadedPhrases
     }
     return vm;
 })();
 
 // Global translation function.
 function tr(phrase) {
+    if(phrase == null) {
+        console.log("Error: can't translate a null phrase.");
+        return '';
+    }
+    
     return window.i18n.getTranslatedPhrase(phrase);
-} 
+}
+
+function ftr(phrase, args) {
+    if(phrase == null) {
+        console.log("Error: can't translate a null phrase.");
+        return '';
+    }
+
+    return vsprintf(tr(phrase)(), args);
+}

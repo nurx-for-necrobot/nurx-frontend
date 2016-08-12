@@ -187,7 +187,7 @@
                             <div class="card-content">
                                 <div class="profile" data-bind="if: profileData() != null">
                                     <h2 data-bind="text: profileData().Username"></h2>
-                                    <span class="small" data-bind="text: statsData() != null ? ('Level: ' + statsData().Level + ' (' + statsData().CurrentXp + '/' + statsData().LevelupXp + ')') : ''"></span>
+                                    <span class="small" data-bind="text: statsData() != null ? (ftr('Level: %s (%s/%s)', [statsData().Level, statsData().CurrentXp, statsData().LevelupXp])) : ''"></span>
                                 </div>
                             </div>
                         </div>
@@ -215,8 +215,8 @@
                                         <div class="item-row">
                                             <div class="item-image" data-bind="attr: { style: 'background-image: url(img/inventory/' + Base.ItemId + '.png)' }"></div>
                                             <div class="item-data">
-                                                <div><span class="item-name" data-bind="text: $root.pokedata.inventory[Base.ItemId]"></span></div>
-                                                <div><span class="item-count" data-bind="text: 'Count: ' + Base.Count + '.'"></span></div>
+                                                <div><span class="item-name" data-bind="text: tr($root.pokedata.inventory[Base.ItemId])()"></span></div>
+                                                <div><span class="item-count" data-bind="text: ftr('Count: %s', [Base.Count])"></span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -246,7 +246,7 @@
                             </div>
 
                             <div class="pad-h-15 pad-v-10">
-                                <span style='font-family: "Roboto"; font-weight: 200; text-transform: uppercase;' data-bind="text: 'Sorted By: ' + pokemon.sortFieldDescription() + ' (' + (pokemon.sortAscending() ? 'Ascending' : 'Descending') + ')'"></span>
+                                <span style='font-family: "Roboto"; font-weight: 200; text-transform: uppercase;' data-bind="text: ftr('Sorted By: %s (%s)', [tr(pokemon.sortFieldDescription())(), (pokemon.sortAscending() ? tr('Ascending')() : tr('Descending')())])"></span>
                             </div>
 
                             <div class="row">
@@ -255,7 +255,7 @@
                                         <div class="pokemon-row">
                                             <div class="poke-image" data-bind="attr: { style: 'background-image: url(img/pokemon/' + Base.PokemonId + '.png)' }"></div>
                                             <div class="poke-data">
-                                                <div><span class="poke-name" data-bind="text: $root.pokedata.pokemon[Base.PokemonId]"></span></div>
+                                                <div><span class="poke-name" data-bind="text: tr($root.pokedata.pokemon[Base.PokemonId])()"></span></div>
                                                 <div><span class="poke-cpiv" data-bind="text: '( CP: ' + Base.Cp + ' IV: ' + Perfection.toPrecision(4) + '% )'"></span></div>
                                             </div>
                                         </div>
@@ -294,6 +294,7 @@
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script type="text/javascript" src="js/knockout-min.js"></script>
         <script type="text/javascript" src="js/numeral.min.js"></script>
+        <script type="text/javascript" src="js/sprintf.min.js"></script>
         <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
         <!--<script type="text/javascript" src="../tmp/nurx-concat.js"></script>-->
         <script type="text/javascript" src="js/nurx.min.js"></script>

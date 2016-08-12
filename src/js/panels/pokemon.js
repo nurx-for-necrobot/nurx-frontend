@@ -55,11 +55,11 @@ window.nurx.registerPanel("pokemon", function(nurx) {
      */
     var sortFieldDescription = ko.computed(function() {
         switch(pokemonSortField()) {
-            case "Perfection": return "IV";      
-            case "Cp": return "CP";
-            case "Hp": return "HP"; 
-            case "PokemonId": return "Number";     
-            case "CreationTimeMs": return "Recent";
+            case "Perfection": return tr("IV")();      
+            case "Cp": return tr("CP")();
+            case "Hp": return tr("HP")(); 
+            case "PokemonId": return tr("Number")();     
+            case "CreationTimeMs": return tr("Recent")();
         }
 
         return pokemonSortField();

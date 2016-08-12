@@ -142,16 +142,16 @@ window.nurx = (function() {
 
             if (wsConnectTries == 0) {
                 timeout = 1000;
-                connectionText("Connection lost<br />reconnecting ...");
+                connectionText(tr("Connection lost<br />reconnecting ...")());
             } else if (wsConnectTries < 3) {
                 timeout = 20000;            // 20 seconds until 3rd try;
-                connectionText("Connection lost<br />trying again in 20 seconds ...");
+                connectionText(tr("Connection lost<br />trying again in 20 seconds ...")());
             } else if (wsConnectTries < 10) {
                 timeout = 1000 * 60 * 5;    // 5 minutes until 10th try.
-                connectionText("Connection lost<br />trying again in 5 minutes  ...");
+                connectionText(tr("Connection lost<br />trying again in 5 minutes  ...")());
             } else {
                 timeout = 1000 * 60 * 20;   // 20 minutes.
-                connectionText("Connection lost<br />trying again in 20 minutes ...");
+                connectionText(tr("Connection lost<br />trying again in 20 minutes ...")());
             }
             
             wsConnectTries++;
@@ -204,7 +204,7 @@ window.nurx = (function() {
                 case "profile":
                     profileData(message.Data);
                     break;
-                case "stats":
+                case "stats":                
                     statsData(message.Data);
                     break;
                 default:
