@@ -167,6 +167,29 @@ ko.bindingHandlers.matInput = {
         });
     }
 };
+
+ko.bindingHandlers.tooltip = {
+    init: function(element, valueAccessor) {
+        var value = ko.unwrap(valueAccessor());
+        $(element).attr("title", value);
+        $(element).tooltipster({
+            theme: 'tooltipster-borderless',
+            side: 'right',
+            delay: [3000, 0]
+        });
+    },
+    update: function(element, valueAccessor, allBindings) {
+        var value = ko.unwrap(valueAccessor());
+
+        $(element).tooltipster("destroy");
+        $(element).attr("title", value);
+        $(element).tooltipster({
+            theme: 'tooltipster-borderless',
+            side: 'right',
+            delay: [3000, 0]
+        });
+    }
+}
 window.pokedata = {
     inventory: {
         "0": "Unknown",

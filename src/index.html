@@ -9,7 +9,10 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="css/opensans.css" rel="stylesheet" type="text/css" />
-        <link href="css/nurx.min.css" rel="stylesheet" type="text/css" />        
+        <link href="css/nurx.min.css" rel="stylesheet" type="text/css" />  
+        <link rel="stylesheet" type="text/css" href="css/tooltipster.bundle.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/tooltipster.borderless.min.css" />
+        
     </head>
     <body>
         
@@ -153,22 +156,22 @@
                         <!-- Panel Navigation -->
                         <div class="center panel-nav" style="height: 100%">
                             <div style="margin-top: 35px">
-                                <a class="btn-floating btn-large waves-effect waves-light teal"
-                                    data-bind="click: function() { $root.openPanel('pokemon'); }">
+                                <a class="btn-floating btn-large waves-effect waves-light teal tooltip"
+                                    data-bind="click: function() { $root.openPanel('pokemon') }, tooltip: tr('Pokemon')">
                                     <i><div style='background-image: url(img/pokeball.png); width: 100%; height: 100%; background-repeat: no-repeat; background-size: 36px 36px; background-position: center center;'></div></i>
                                 </a>
 
                                 <br /><br />
 
-                                <a class="btn-floating btn-large waves-effect waves-light red"
-                                    data-bind="click: function() { $root.openPanel('inventory'); }">
+                                <a class="btn-floating btn-large waves-effect waves-light red tooltip"
+                                    data-bind="click: function() { $root.openPanel('inventory') }, tooltip: tr('Inventory')">
                                     <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                                 </a>
 
                                 <br /><br />
 
-                                <a class="btn-floating btn-large waves-effect waves-light green"
-                                    data-bind="click: function() { showLog(!showLog()); }">
+                                <a class="btn-floating btn-large waves-effect waves-light green tooltip"
+                                    data-bind="click: function() { showLog(!showLog()); }, tooltip: tr('Log')">
                                     <i class="fa fa-terminal" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -295,6 +298,7 @@
         <script type="text/javascript" src="js/knockout-min.js"></script>
         <script type="text/javascript" src="js/numeral.min.js"></script>
         <script type="text/javascript" src="js/sprintf.min.js"></script>
+        <script type="text/javascript" src="js/tooltipster.bundle.min.js"></script>
         <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
         <!--<script type="text/javascript" src="../tmp/nurx-concat.js"></script>-->
         <script type="text/javascript" src="js/nurx.min.js"></script>
